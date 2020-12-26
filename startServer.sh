@@ -4,7 +4,12 @@
 currentIPFile="./currentIP.txt"
 lastIPFile="./lastIP.txt"
 lastIP=$(head -n 1 "$lastIPFile")
-serverOwnersEmail="./emailAddress.txt"
+serverOwnersEmail="./emailAddresses.txt"
+
+
+# TODO - Make this email all emails on the list
+# TODO - pull all email functionality into a separate utility
+firstEmail=$(sed -n '1,1p' "${serverOwnersEmail}")
 
 
 # grab the current ip address
@@ -22,16 +27,16 @@ if cmp -s "$currentIPFile" "$lastIPFile"; then
 
 else
     # files (ip addresses) are different
-    printf 'The current ip of: "%s" is different from the last ip: "%s"\n' "$currentI>
+    printf 'The current ip of: "%s" is different from the last ip: "%s"\n' "$currentIP" "$lastIP"
 
     # update the lastIP file
     echo "$currentIP" > "$lastIPFile"
 
     # send an email to alert server owner's email
     message="New IP address: $currentIP"
-    echo "$message"  | mutt -s "IP CHANGE" "$serverOwnersEmail"
+    echo "$message"  | mutt -s "IP CHANGE" "$firstEmail"
 fi
 
 
 # start the server w/ file log output
-java -Xmx10G -Xms2G -jar /opt/minecraft/CovidCraft/server.jar
+java -Xmx10G -Xms2G -jar /opt/minecraft/CovidCraft/server.jar --nogui &
