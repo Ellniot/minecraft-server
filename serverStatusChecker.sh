@@ -20,12 +20,12 @@ serverOwnersEmail="./emailAddresses.txt"
 # TODO - pull all email functionality into a separate utility
 firstEmail=$(sed -n '1,1p' "${serverOwnersEmail}")
 
-echo "Boot counter = $bootLoopCounter"
+#echo "Boot counter = $bootLoopCounter"
 
 # Check if the server has tried to boot > or == the max number of times
 if [ "$bootLoopCounter" -ge "$MAX_BOOT_LOOP" ]; then
 
-    echo "Boot counter hit max"
+    #echo "Boot counter hit max"
 
     # email the server admin
     message="Server boot count hit max boot count of $bootLoopCounter"
@@ -40,16 +40,16 @@ fi;
 
 # check if there is a CovidCraft java process running
 taskList=$(ps -fea | grep -i "/opt/minecraft/CovidCraft/server.jar --nogui")
-echo "taskList = ${taskList}"
+#echo "taskList = ${taskList}"
 # then turn it into a count
 processCount=$(wc -l <<< "${taskList}")
-echo "processCount = ${processCount}"
+#echo "processCount = ${processCount}"
 
 
 ## If the sever is not running...
 if [ "${processCount}" -lt 2 ]; then
 
-    echo "Server is not running"
+    #echo "Server is not running"
 
     # add count to boot loop counter
         # echo "${bootLoopCounterFile}" == ./bootLoopCouter.txt
@@ -68,7 +68,7 @@ if [ "${processCount}" -lt 2 ]; then
 
 # else it is running
 else
-    echo "server is running, doing nothing"
+    #echo "server is running, doing nothing"
     # reset the boot loop counter
     echo "0" > $bootLoopCounterFile
 

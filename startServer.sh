@@ -14,7 +14,7 @@ firstEmail=$(sed -n '1,1p' "${serverOwnersEmail}")
 
 # grab the current ip address
 currentIP=$(dig @resolver4.opendns.com myip.opendns.com +short)
-echo "Current IP = ${currentIP}"
+#echo "Current IP = ${currentIP}"
 # output it to a file to make comparison easier
 echo "$currentIP" > "$currentIPFile"
 
@@ -22,12 +22,12 @@ echo "$currentIP" > "$currentIPFile"
 # compare the two ip addresses
 if cmp -s "$currentIPFile" "$lastIPFile"; then
     # no alert, files (ip addresses) are the same
-    printf 'The current ip: "%s" == the last ip: "%s"\n' "$currentIP" "$lastIP"
+    #printf 'The current ip: "%s" == the last ip: "%s"\n' "$currentIP" "$lastIP"
     # no need to update the lastIP file
 
 else
     # files (ip addresses) are different
-    printf 'The current ip of: "%s" is different from the last ip: "%s"\n' "$currentIP" "$lastIP"
+    #printf 'The current ip of: "%s" is different from the last ip: "%s"\n' "$currentIP" "$lastIP"
 
     # update the lastIP file
     echo "$currentIP" > "$lastIPFile"
